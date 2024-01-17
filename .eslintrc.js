@@ -122,5 +122,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
 
     '@next/no-img-element': 'off',
+
+    'no-html-link-for-pages': 'off',
   },
 };

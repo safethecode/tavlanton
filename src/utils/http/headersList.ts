@@ -1,3 +1,5 @@
+'use client';
+
 import { headers } from 'next/headers';
 import { type HeaderFields } from '@/typings/http';
 
