@@ -26,6 +26,16 @@ const MyPointPage = () => {
       emojiSize: 200,
       confettiNumber: 30,
     });
+
+    const now = new Date();
+
+    const expires = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1,
+    );
+
+    document.cookie = `yt-once-day-gift=true; expires=${expires}; path=/`;
   };
 
   useEffect(() => {
@@ -57,7 +67,14 @@ const MyPointPage = () => {
         <div className="flex flex-col gap-4l">
           <Card className="w-full mb-4 bg-gray-100">
             <CardHeader>
-              <CardTitle className="text-2xl">누적 달란트 💪</CardTitle>
+              <CardTitle className="flex items-center text-2xl gap-1">
+                누적 달란트
+                <img
+                  src="/_static/apng/smiling-face-with-hearts.png"
+                  alt="화이팅!"
+                  className="w-8"
+                />
+              </CardTitle>
               <h1 className="text-2xl font-black text-primary">5000P</h1>
               <CardDescription className="font-bold">
                 대박! 지금 상위 10%에 들어가고 있어요!
@@ -68,13 +85,13 @@ const MyPointPage = () => {
             </CardContent>
           </Card>
         </div>
-        <h1 className="text-lg font-bold mb-4">달란트 사용 내역</h1>
+        <h1 className="text-lg font-bold mb-2">달란트 사용 내역</h1>
         <Card className="w-full mb-4">
           <CardContent className="flex flex-col justify-center items-center p-4">
             <img
               src="/_static/list-empty.svg"
               alt="리스트에 아무 것도 없어요!"
-              className="w-36 mb-4"
+              className="w-32 mb-4"
             />
             <h4 className="text-sm font-normal text-gray-400">
               달란트를 사용하면 이 곳에 내역이 남아요!
@@ -82,18 +99,18 @@ const MyPointPage = () => {
           </CardContent>
         </Card>
       </div>
-      <footer className="w-full bg-gray-50 p-4 rounded-xl border border-solid border-gray-200 mb-4">
-        <p className="text-gray-500 text-sm">
-          © 2024 인천순복음교회 대학청년대교구 비전팀
-        </p>
-      </footer>
-      <div className="sticky bottom-6 w-full">
+      <div className="w-full">
         <Button
           variant="default"
-          className="w-full h-14 font-bold text-sm rounded-xl active:bg-primary/60 p-4 shadow-lg z-10"
+          className="w-full h-14 flex items-center font-bold text-sm rounded-xl active:bg-primary/60 p-4 shadow-lg z-10"
           onClick={handleOnceDayGiftClick}
         >
-          하루 한 번, 랜덤 달란트 받기 🎁
+          하루 한 번, 랜덤 달란트 받기
+          <img
+            src="/_static/apng/heart-hands.png"
+            alt="선물"
+            className="w-4 ml-1"
+          />
         </Button>
         <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-t from-white/80 to-white -z-10"></div>
       </div>
