@@ -15,8 +15,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/app/ui';
+import { useRouter } from 'next/navigation';
 
 const LeaderMainPage = () => {
+  const router = useRouter();
+
+  const handleStampRoute = () => {
+    router.push('/stamp');
+  };
   return (
     <div className="relative flex flex-col max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-6">
@@ -36,7 +42,9 @@ const LeaderMainPage = () => {
               금요철야, 온새토에서 달란트를 적립할 수 있는 번호 입력 페이지가
               나와요!
             </CardDescription>
-            <Button variant="outline">이동하기</Button>
+            <Button variant="outline" onClick={handleStampRoute}>
+              이동하기
+            </Button>
           </CardHeader>
         </Card>
         <Card className="w-full">
@@ -48,7 +56,7 @@ const LeaderMainPage = () => {
             <CardDescription>
               비전팀 전체 인원들의 달란트 현황을 확인할 수 있는 페이지가 나와요!
             </CardDescription>
-            <Button variant="outline">이동하기 </Button>
+            <Button variant="outline">이동하기</Button>
           </CardHeader>
         </Card>
       </div>
@@ -68,9 +76,9 @@ const LeaderMainPage = () => {
             </CardHeader>
           </Card>
         </div>
-        <Button variant="outline" className="mb-2">
+        {/* <Button variant="outline" className="mb-2">
           구역 정보 확인하기
-        </Button>
+        </Button> */}
         <div className="rounded-xl border border-solid border-gray-200 p-4">
           <Table>
             <TableCaption>현재까지 5명의 구역원이 조회되었어요 😎</TableCaption>

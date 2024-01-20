@@ -4,6 +4,10 @@ const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
 
 const withVanillaExtract = createVanillaExtractPlugin();
 
+const withPWA = require('next-pwa')({
+  dest: 'public',
+});
+
 const nextConfig = {
   reactStrictMode: false,
   experimental: {
@@ -13,6 +17,17 @@ const nextConfig = {
   },
   typescript: {},
   distDir: '.next',
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.externals.push({
+        bufferutil: 'bufferutil',
+        'utf-8-validate': 'utf-8-validate',
+        'supports-color': 'supports-color',
+      });
+    }
+
+    return config;
+  },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
@@ -20,4 +35,4 @@ const nextConfig = {
   swcMinify: true,
 };
 
-module.exports = withVanillaExtract(nextConfig);
+module.exports = withPWA(withVanillaExtract(nextConfig));

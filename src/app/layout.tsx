@@ -1,5 +1,5 @@
 import { constructMetadata } from '@/utils/next';
-import { InterFontStyle } from '@/styles/globalFontsStyle';
+import { SpoqaFontStyle } from '@/styles/globalFontsStyle';
 
 import Providers from './providers';
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${InterFontStyle.variable}`}>
+      <body className={`${SpoqaFontStyle.className}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

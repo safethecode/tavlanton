@@ -1,4 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
+
 import {
   Alert,
   AlertTitle,
@@ -20,6 +22,7 @@ import {
   DialogFooter,
   DialogClose,
   Input,
+  Skeleton,
 } from '@/app/ui';
 import { wrap } from './page.css';
 import { BellIcon } from '@radix-ui/react-icons';
@@ -71,7 +74,7 @@ const DistrictMemberManagement = ({ params }: Props) => {
           className="w-36"
         />
         <Dialog>
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <Button variant="outline">달란트 추가하기</Button>
           </DialogTrigger>
           <DialogContent>
@@ -98,7 +101,7 @@ const DistrictMemberManagement = ({ params }: Props) => {
       <div className="flex flex-col gap-2">
         <Alert className="mb-4">
           <BellIcon className="w-4 h-4 mr-1" />
-          <AlertTitle>{district.district_name}장님 어서오세요!</AlertTitle>
+          <AlertTitle>{district.district_name} 구역장님 어서오세요!</AlertTitle>
           <AlertDescription>
             아래에서 각 구역원들을 확인할 수 있고, 추가도 할 수 있어요!
           </AlertDescription>

@@ -1,67 +1,104 @@
 /* eslint-disable @next/next/no-img-element */
+'use client';
+
+import { useEffect, useRef } from 'react';
 import {
   Alert,
   AlertTitle,
   AlertDescription,
   Button,
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  Progress,
 } from '@/app/ui';
-import { wrap } from './page.css';
-import { BellIcon } from '@radix-ui/react-icons';
+import { HeartFilledIcon } from '@radix-ui/react-icons';
+import JSConfetti from 'js-confetti';
 
-const DistrictMemberManagement = () => {
+const MyPointPage = () => {
+  const confettiRef = useRef<JSConfetti>(null);
+
+  const handleOnceDayGiftClick = () => {
+    confettiRef.current?.addConfetti({
+      emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
+      emojiSize: 200,
+      confettiNumber: 30,
+    });
+  };
+
+  useEffect(() => {
+    (confettiRef.current as JSConfetti) = new JSConfetti();
+  }, []);
+
   return (
-    <main className={wrap}>
+    <main className="relative h-full flex flex-col max-w-2xl mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
         <img
-          src="/_static/district/district-leader-logo.svg"
-          alt="대청_달란트_구역장"
+          src="/_static/district/district-member-logo.svg"
+          alt="대청_달란트"
           className="w-36"
         />
-        <Button variant="outline">달란트 추가하기</Button>
+        <Button variant="outline">내 정보</Button>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 h-full">
         <Alert className="mb-4">
-          <BellIcon className="w-4 h-4 mr-1" />
-          <AlertTitle>홍길동 구역장님 어서오세요!</AlertTitle>
-          <AlertDescription>
-            아래에서 각 구역원들을 확인할 수 있고, 추가도 할 수 있어요!
+          <HeartFilledIcon className="w-4 h-4 mr-1" />
+          <AlertTitle className="mb-2">오늘의 말씀</AlertTitle>
+          <AlertDescription className="font-bold mb-2">
+            그런즉 심는 이나 물주는 이는 아무 것도 아니로되 오직 자라나게 하시는
+            하나님 뿐이니라
+          </AlertDescription>
+          <AlertDescription className="underline text-xs">
+            고린도전서 3:7 KRV
           </AlertDescription>
         </Alert>
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-extrabold">구역원 목록</h1>
-          <Button variant="default">구역원 추가</Button>
+        <div className="flex flex-col gap-4l">
+          <Card className="w-full mb-4 bg-gray-100">
+            <CardHeader>
+              <CardTitle className="text-2xl">누적 달란트 💪</CardTitle>
+              <h1 className="text-2xl font-black text-primary">5000P</h1>
+              <CardDescription className="font-bold">
+                대박! 지금 상위 10%에 들어가고 있어요!
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Progress value={50} />
+            </CardContent>
+          </Card>
         </div>
-        <Table>
-          <TableCaption>현재까지 5명의 구역원이 조회되었어요 😎</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">번호</TableHead>
-              <TableHead className="w-[100px]">소속 구역</TableHead>
-              <TableHead>이름</TableHead>
-              <TableHead>핸드폰 번호</TableHead>
-              <TableHead className="text-right">달란트</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">INV001</TableCell>
-              <TableCell>차한나 구역</TableCell>
-              <TableCell>홍길동</TableCell>
-              <TableCell>9482</TableCell>
-              <TableCell className="text-right">500P</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        <h1 className="text-lg font-bold mb-4">달란트 사용 내역</h1>
+        <Card className="w-full mb-4">
+          <CardContent className="flex flex-col justify-center items-center p-4">
+            <img
+              src="/_static/list-empty.svg"
+              alt="리스트에 아무 것도 없어요!"
+              className="w-36 mb-4"
+            />
+            <h4 className="text-sm font-normal text-gray-400">
+              달란트를 사용하면 이 곳에 내역이 남아요!
+            </h4>
+          </CardContent>
+        </Card>
+      </div>
+      <footer className="w-full bg-gray-50 p-4 rounded-xl border border-solid border-gray-200 mb-4">
+        <p className="text-gray-500 text-sm">
+          © 2024 인천순복음교회 대학청년대교구 비전팀
+        </p>
+      </footer>
+      <div className="sticky bottom-6 w-full">
+        <Button
+          variant="default"
+          className="w-full h-14 font-bold text-sm rounded-xl active:bg-primary/60 p-4 shadow-lg z-10"
+          onClick={handleOnceDayGiftClick}
+        >
+          하루 한 번, 랜덤 달란트 받기 🎁
+        </Button>
+        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-t from-white/80 to-white -z-10"></div>
       </div>
     </main>
   );
 };
 
-export default DistrictMemberManagement;
+export default MyPointPage;
