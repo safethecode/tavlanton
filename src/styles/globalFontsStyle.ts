@@ -35,3 +35,9 @@ export const SpoqaFontStyle = localFont({
     },
   ],
 });
+
+export const KartFontStyle = localFont({
+  src: [
+    { path: '../../public/_fonts/kart.ttf', weight: '700', style: 'normal' },
+  ],
+});
