@@ -61,8 +61,6 @@ const LeaderStampPage = () => {
     getPointsType();
   }, []);
 
-  console.log(pointsType);
-
   return (
     <div className="w-full h-full flex flex-col">
       <header className="flex items-center justify-center p-6 bg-white border-b border-solid border-gray-200">

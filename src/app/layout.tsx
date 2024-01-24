@@ -9,6 +9,7 @@ import '@/styles/global.css';
 export const metadata = constructMetadata({
   title: '대청비전',
   description: '대학청년대교구 비전팀',
+  image: '/public/_static/opengraph/talent_og.png',
 });
 
 export default function RootLayout({
