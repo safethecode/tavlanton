@@ -1,6 +1,6 @@
-import { supabaseServer } from '@/utils';
+// import { supabaseServer } from '@/utils';
 
-export async function GET() {
-  const users = await supabaseServer.from('users').select('*');
-  return Response.json(users);
-}
+// export async function GET() {
+//   const users = await supabaseServer.from('users').select('*');
+//   return Response.json(users);
+// }
