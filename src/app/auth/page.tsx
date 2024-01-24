@@ -2,16 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import {
-  Alert,
-  AlertTitle,
-  AlertDescription,
   Button,
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  Progress,
   Input,
   Select,
   SelectTrigger,
@@ -19,6 +10,7 @@ import {
   SelectItem,
   SelectContent,
 } from '@/app/ui';
+import { toast } from 'sonner';
 import axios from 'axios';
 import { KartFontStyle } from '@/styles';
 
@@ -38,7 +30,9 @@ const AuthPage = () => {
   };
 
   const handleJoinClick = async () => {
-    console.log(joinInfo);
+    toast('2023년 01월 26일 금요철야 기도회부터 사용 가능해요!', {
+      description: '우리 모두 금요 철야 기도회에서 만나요 👋',
+    });
   };
 
   useEffect(() => {

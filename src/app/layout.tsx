@@ -1,3 +1,4 @@
+import { Toaster } from '@/app/ui';
 import { constructMetadata } from '@/utils/next';
 import { SpoqaFontStyle } from '@/styles/globalFontsStyle';
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${SpoqaFontStyle.className}`}>
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );
