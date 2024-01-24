@@ -29,7 +29,6 @@ export function constructMetadata({
         },
       ],
     },
-    metadataBase: new URL('https://example.com'),
     themeColor: '#FFF',
   };
 }
