@@ -13,8 +13,12 @@ import {
 import { toast } from 'sonner';
 import axios from 'axios';
 import { KartFontStyle } from '@/styles';
+import { useRouter } from 'next/navigation';
+import { setCookie } from 'cookies-next';
 
 const AuthPage = () => {
+  const router = useRouter();
+
   const [districts, setDistricts] = useState<any[]>([]);
   const [joinInfo, setJoinInfo] = useState<any>({
     districtId: '',
@@ -30,9 +34,30 @@ const AuthPage = () => {
   };
 
   const handleJoinClick = async () => {
-    toast('2023년 01월 26일 금요철야 기도회부터 사용 가능해요!', {
-      description: '우리 모두 금요 철야 기도회에서 만나요 👋',
-    });
+    if (joinInfo) {
+      axios
+        .post('/api/auth', joinInfo, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          if (res.data.status === 200) {
+            setCookie('authenticated', true, {
+              maxAge: 60 * 60 * 24 * 365,
+            });
+            setCookie('user', JSON.stringify(res.data.data), {
+              maxAge: 60 * 60 * 24 * 365,
+            });
+            toast('참여가 완료되었어요!', {
+              description: '대청달란트에 참여해주셔서 감사합니다 👋',
+            });
+            router.push('/');
+          } else {
+            toast('참여에 실패했어요!', {
+              description: '잠시 후 다시 시도해주세요 😥',
+            });
+          }
+        });
+    }
   };
 
   useEffect(() => {
