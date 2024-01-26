@@ -17,11 +17,13 @@ import { supabase } from '@/utils';
 import axios from 'axios';
 import { toast } from 'sonner';
 import JSConfetti from 'js-confetti';
+import { ColorRing } from 'react-loader-spinner';
 
 const LeaderStampPage = () => {
   const router = useRouter();
 
   const confettiRef = useRef<JSConfetti>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [pointsType, setPointsType] = useState<any[]>([
     {
@@ -41,6 +43,7 @@ const LeaderStampPage = () => {
   };
 
   const handleStamp = async () => {
+    setLoading(true);
     if (phoneNumber.length < 4) {
       toast.error('전화번호 뒷자리를 모두 입력해주세요.', {
         position: 'bottom-left',
@@ -65,6 +68,7 @@ const LeaderStampPage = () => {
                 position: 'top-center',
               });
               setPhoneNumber('');
+              setLoading(false);
             });
         }
       });
@@ -221,7 +225,21 @@ const LeaderStampPage = () => {
                 className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200 bg-blue-500"
                 onClick={handleStamp}
               >
-                <p className="text-5xl text-white">적립</p>
+                <p className="text-5xl text-white">
+                  {loading ? (
+                    <ColorRing
+                      visible={true}
+                      height="80"
+                      width="80"
+                      ariaLabel="color-ring-loading"
+                      wrapperStyle={{}}
+                      wrapperClass="color-ring-wrapper"
+                      colors={['#FFF', '#FFF', '#FFF', '#FFF', '#FFF']}
+                    />
+                  ) : (
+                    '적립'
+                  )}
+                </p>
               </div>
             </div>
           </div>
