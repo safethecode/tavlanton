@@ -15,14 +15,51 @@ import {
   TableHeader,
   TableRow,
 } from '@/app/ui';
+import axios from 'axios';
+import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+interface User {
+  id?: string;
+  created_at?: any;
+  districts_id?: string;
+  name?: string;
+  back_seat?: string;
+  leader?: boolean;
+  permission?: boolean;
+  point?: number;
+}
 
 const LeaderMainPage = () => {
   const router = useRouter();
 
+  const [districtInfo, setDistrictInfo] = useState({
+    length: 0,
+    points: 0,
+    users: [] as User[],
+    district: {
+      district_name: '',
+    },
+  });
+
+  const user: User = JSON.parse(getCookie('user')! || '{}');
+
   const handleStampRoute = () => {
     router.push('/stamp');
   };
+
+  useEffect(() => {
+    axios
+      .get('/api/district', {
+        params: {
+          district_id: user.districts_id,
+        },
+      })
+      .then((res) => {
+        setDistrictInfo(res.data);
+      });
+  }, []);
   return (
     <div className="relative flex flex-col max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-6">
@@ -73,22 +110,23 @@ const LeaderMainPage = () => {
           <Card className="w-full">
             <CardHeader>
               <CardTitle>구역원 수 👩‍🌾</CardTitle>
-              <CardDescription>5명</CardDescription>
+              <CardDescription>{districtInfo.length}명</CardDescription>
             </CardHeader>
           </Card>
           <Card className="w-full">
             <CardHeader>
               <CardTitle>달란트 🪙</CardTitle>
-              <CardDescription>5,000 P</CardDescription>
+              <CardDescription>
+                {districtInfo.points.toLocaleString('ko-KR')} P
+              </CardDescription>
             </CardHeader>
           </Card>
         </div>
-        {/* <Button variant="outline" className="mb-2">
-          구역 정보 확인하기
-        </Button> */}
         <div className="rounded-xl border border-solid border-gray-200 p-4">
           <Table>
-            <TableCaption>현재까지 5명의 구역원이 조회되었어요 😎</TableCaption>
+            <TableCaption>
+              현재까지 {districtInfo.length}명의 구역원이 조회되었어요 😎
+            </TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[70px]">번호</TableHead>
@@ -99,13 +137,19 @@ const LeaderMainPage = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">ABD</TableCell>
-                <TableCell>차한나 구역</TableCell>
-                <TableCell>손지민</TableCell>
-                <TableCell>8429</TableCell>
-                <TableCell className="text-right">500 P</TableCell>
-              </TableRow>
+              {districtInfo.users.map((user, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{index + 1}</TableCell>
+                  <TableCell>
+                    {districtInfo.district.district_name} 구역
+                  </TableCell>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.back_seat}</TableCell>
+                  <TableCell className="text-right">
+                    {user.point?.toLocaleString('ko-KR')} P
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>

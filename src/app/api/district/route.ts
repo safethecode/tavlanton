@@ -17,6 +17,12 @@ export async function GET(req: NextRequest) {
     .eq('districts_id', districtId)
     .select('point');
 
+  const district = await supabaseServer
+    .from('districts')
+    .select('*')
+    .eq('id', districtId)
+    .single();
+
   const pointsSum = districtInPoints.data!.reduce(
     (sum, point) => sum + point.point,
     0,
@@ -27,5 +33,6 @@ export async function GET(req: NextRequest) {
     users: districtInUsers.data,
     points: pointsSum,
     length: districtInUsers.data!.length,
+    district: district.data,
   });
 }
