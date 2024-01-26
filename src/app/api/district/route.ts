@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
 
   return (Response as any).json({
     status: 200,
-    users: districtInUsers,
+    users: districtInUsers.data,
     points: pointsSum,
     length: districtInUsers.data!.length,
   });
