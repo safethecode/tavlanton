@@ -70,7 +70,7 @@ const LeaderStampPage = () => {
         </Button>
       </header>
       <div className="flex">
-        <section className="flex flex-col w-1/2 h-screen h-[calc(100vh-85px)] p-8">
+        <section className="flex flex-col w-1/2 h-[calc(100vh-181px)] p-8">
           <Card className="w-full mb-4">
             <CardHeader>
               <div className="flex items-center gap-2">
@@ -84,22 +84,8 @@ const LeaderStampPage = () => {
               </CardDescription>
             </CardHeader>
           </Card>
-          <Card className="w-full mb-4">
-            <CardHeader>
-              <CardTitle>QR 코드</CardTitle>
-              <CardDescription>
-                번호 입력이 힘들다면 핸드폰으로 QR 코드를 찍어주세요.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-6">
-              <QRCode
-                contents="https://www.naver.com"
-                className="w-[300px] h-[300px] scale-[1.2]"
-              />
-            </CardContent>
-          </Card>
         </section>
-        <section className="flex flex-col items-center w-1/2 h-screen bg-white h-[calc(100vh-85px)] border-l border-solid border-gray-200">
+        <section className="flex flex-col items-center w-1/2 bg-white h-[calc(100vh-85px)] border-l border-solid border-gray-200">
           <div className="flex flex-col items-center justify-center w-full min-h-[200px] border-b border-solid border-gray-200">
             <p className="text-9xl font-bold text-gray-700 align-middle mb-4">
               8429

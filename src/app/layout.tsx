@@ -1,6 +1,7 @@
 import { Toaster } from '@/app/ui';
 import { constructMetadata } from '@/utils/next';
 import { SpoqaFontStyle } from '@/styles/globalFontsStyle';
+import { Analytics } from '@vercel/analytics/react';
 
 import Providers from './providers';
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={`${SpoqaFontStyle.className}`}>
         <Providers>{children}</Providers>
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
