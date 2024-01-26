@@ -51,25 +51,24 @@ const LeaderStampPage = () => {
       return;
     }
     const getPhoneNumber = async () => {
+      confettiRef.current?.addConfetti({
+        emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
+        emojiSize: 200,
+        confettiNumber: 30,
+      });
+      toast.success('정상적으로 적립되었어요! 즐거운 예배!', {
+        position: 'top-center',
+      });
       await axios.get(`/api/users/${phoneNumber}`).then((res) => {
         if (res.data.data.length === 1) {
+          setPhoneNumber('');
+          setLoading(false);
           axios
             .put('/api/stamp', {
               id: res.data.data[0].id,
               point: res.data.data[0].point + pointsType[0].point,
             })
-            .then(() => {
-              confettiRef.current?.addConfetti({
-                emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
-                emojiSize: 200,
-                confettiNumber: 30,
-              });
-              toast.success('정상적으로 적립되었어요! 즐거운 예배!', {
-                position: 'top-center',
-              });
-              setPhoneNumber('');
-              setLoading(false);
-            });
+            .then(() => {});
         }
       });
     };
