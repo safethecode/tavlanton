@@ -100,7 +100,14 @@ const LeaderMainPage = () => {
             <CardDescription>
               비전팀 전체 인원들의 달란트 현황을 확인할 수 있는 페이지가 나와요!
             </CardDescription>
-            <Button variant="outline">이동하기</Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                router.push('/realtime');
+              }}
+            >
+              이동하기
+            </Button>
           </CardHeader>
         </Card>
       </div>
