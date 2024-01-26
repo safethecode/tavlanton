@@ -58,17 +58,16 @@ const UserMyPage = () => {
           <span className="font-bold">{createdAt.toDateString()}</span>
         </li>
       </ul>
-      {user.permission ||
-        (user.leader && (
-          <Button
-            variant="default"
-            onClick={() => {
-              router.push('/leader');
-            }}
-          >
-            대청비전 관리자 페이지 이동
-          </Button>
-        ))}
+      {user.leader && (
+        <Button
+          variant="default"
+          onClick={() => {
+            router.push('/leader');
+          }}
+        >
+          대청비전 관리자 페이지 이동
+        </Button>
+      )}
     </div>
   );
 };
