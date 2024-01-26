@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { supabaseServer } from '@/utils';
 
 export async function POST(req: NextRequest) {
-  const { name } = await req.json();
+  const { name, backSeat } = await req.json();
 
   const { data, error } = await supabaseServer
     .from('users')
@@ -14,6 +14,13 @@ export async function POST(req: NextRequest) {
     return (Response as any).json({
       status: 500,
       message: error.message,
+    });
+  }
+
+  if (data.back_seat !== backSeat) {
+    return (Response as any).json({
+      status: 401,
+      message: 'Invalid back seat',
     });
   }
 
