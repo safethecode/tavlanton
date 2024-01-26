@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from '@/app/ui';
 
-import { QRCode } from '@/components';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils';
 
@@ -27,6 +26,14 @@ const LeaderStampPage = () => {
       selected: false,
     },
   ]);
+
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+
+  const handlePhoneNumber = (number: string) => {
+    if (phoneNumber.length < 4) {
+      setPhoneNumber((prev) => prev + number);
+    }
+  };
 
   const handleBack = () => {
     router.back();
@@ -88,7 +95,7 @@ const LeaderStampPage = () => {
         <section className="flex flex-col items-center w-1/2 bg-white h-[calc(100vh-85px)] border-l border-solid border-gray-200">
           <div className="flex flex-col items-center justify-center w-full min-h-[200px] border-b border-solid border-gray-200">
             <p className="text-9xl font-bold text-gray-700 align-middle mb-4">
-              8429
+              {phoneNumber}
             </p>
             <p className="text-sm text-gray-400">
               본인이 사용하고 있는 전화번호 뒷자리를 입력해야 해요!
@@ -96,40 +103,70 @@ const LeaderStampPage = () => {
           </div>
           <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-285px)]">
             <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('1')}
+              >
                 <p className="text-5xl text-gray-500">1</p>
               </div>
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('2')}
+              >
                 <p className="text-5xl text-gray-500">2</p>
               </div>
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('3')}
+              >
                 <p className="text-5xl text-gray-500">3</p>
               </div>
             </div>
             <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('4')}
+              >
                 <p className="text-5xl text-gray-500">4</p>
               </div>
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('5')}
+              >
                 <p className="text-5xl text-gray-500">5</p>
               </div>
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('6')}
+              >
                 <p className="text-5xl text-gray-500">6</p>
               </div>
             </div>
             <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('7')}
+              >
                 <p className="text-5xl text-gray-500">7</p>
               </div>
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('8')}
+              >
                 <p className="text-5xl text-gray-500">8</p>
               </div>
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('9')}
+              >
                 <p className="text-5xl text-gray-500">9</p>
               </div>
             </div>
             <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => setPhoneNumber((prev) => prev.slice(0, -1))}
+              >
                 <p className="text-5xl text-gray-300">지우기</p>
               </div>
               <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
