@@ -14,6 +14,8 @@ import {
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils';
+import axios from 'axios';
+import { toast } from 'sonner';
 
 const LeaderStampPage = () => {
   const router = useRouter();
@@ -33,6 +35,33 @@ const LeaderStampPage = () => {
     if (phoneNumber.length < 4) {
       setPhoneNumber((prev) => prev + number);
     }
+  };
+
+  const handleStamp = async () => {
+    if (phoneNumber.length < 4) {
+      toast.error('전화번호 뒷자리를 모두 입력해주세요.', {
+        position: 'bottom-left',
+      });
+      return;
+    }
+    const getPhoneNumber = async () => {
+      await axios.get(`/api/users/${phoneNumber}`).then((res) => {
+        if (res.data.data.length === 1) {
+          axios
+            .put('/api/stamp', {
+              id: res.data.data[0].id,
+              point: res.data.data[0].point + pointsType[0].point,
+            })
+            .then(() => {
+              console.log('성공');
+            });
+        }
+      });
+    };
+
+    getPhoneNumber();
+
+    setPhoneNumber('');
   };
 
   const handleBack = () => {
@@ -172,7 +201,10 @@ const LeaderStampPage = () => {
               <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
                 <p className="text-5xl text-gray-500">0</p>
               </div>
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200 bg-blue-500">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200 bg-blue-500"
+                onClick={handleStamp}
+              >
                 <p className="text-5xl text-white">적립</p>
               </div>
             </div>
