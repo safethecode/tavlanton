@@ -12,13 +12,16 @@ import {
   CardTitle,
 } from '@/app/ui';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { supabase } from '@/utils';
 import axios from 'axios';
 import { toast } from 'sonner';
+import JSConfetti from 'js-confetti';
 
 const LeaderStampPage = () => {
   const router = useRouter();
+
+  const confettiRef = useRef<JSConfetti>(null);
 
   const [pointsType, setPointsType] = useState<any[]>([
     {
@@ -53,15 +56,21 @@ const LeaderStampPage = () => {
               point: res.data.data[0].point + pointsType[0].point,
             })
             .then(() => {
-              console.log('성공');
+              confettiRef.current?.addConfetti({
+                emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
+                emojiSize: 200,
+                confettiNumber: 30,
+              });
+              toast.success('정상적으로 적립되었어요! 즐거운 예배!', {
+                position: 'top-center',
+              });
+              setPhoneNumber('');
             });
         }
       });
     };
 
     getPhoneNumber();
-
-    setPhoneNumber('');
   };
 
   const handleBack = () => {
@@ -95,6 +104,10 @@ const LeaderStampPage = () => {
     };
 
     getPointsType();
+  }, []);
+
+  useEffect(() => {
+    (confettiRef.current as JSConfetti) = new JSConfetti();
   }, []);
 
   return (
