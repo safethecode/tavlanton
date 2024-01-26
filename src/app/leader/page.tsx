@@ -19,6 +19,7 @@ import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 interface User {
   id?: string;
@@ -103,7 +104,11 @@ const LeaderMainPage = () => {
             <Button
               variant="outline"
               onClick={() => {
-                router.push('/realtime');
+                if (user.permission) {
+                  router.push('/realtime');
+                } else {
+                  toast.error('권한이 없어요. 들어올 수 없단 뜻!');
+                }
               }}
             >
               이동하기
