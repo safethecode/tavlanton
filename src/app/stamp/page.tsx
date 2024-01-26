@@ -211,7 +211,10 @@ const LeaderStampPage = () => {
               >
                 <p className="text-5xl text-gray-300">지우기</p>
               </div>
-              <div className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200">
+              <div
+                className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
+                onClick={() => handlePhoneNumber('0')}
+              >
                 <p className="text-5xl text-gray-500">0</p>
               </div>
               <div
