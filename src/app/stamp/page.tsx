@@ -59,10 +59,10 @@ const LeaderStampPage = () => {
       toast.success('정상적으로 적립되었어요! 즐거운 예배!', {
         position: 'top-center',
       });
+      setPhoneNumber('');
+      setLoading(false);
       await axios.get(`/api/users/${phoneNumber}`).then((res) => {
         if (res.data.data.length === 1) {
-          setPhoneNumber('');
-          setLoading(false);
           axios
             .put('/api/stamp', {
               id: res.data.data[0].id,
