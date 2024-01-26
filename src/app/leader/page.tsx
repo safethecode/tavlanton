@@ -31,7 +31,14 @@ const LeaderMainPage = () => {
           alt="대청_달란트_구역장"
           className="w-36"
         />
-        <Button variant="outline">로그아웃</Button>
+        <Button
+          variant="outline"
+          onClick={() => {
+            router.back();
+          }}
+        >
+          돌아가기
+        </Button>
       </div>
       <h1 className="text-2xl font-extrabold mb-4">바로 가기</h1>
       <div className="flex gap-4 mb-4 max-[640px]:flex-col">
