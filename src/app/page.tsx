@@ -19,8 +19,11 @@ import JSConfetti from 'js-confetti';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const MyPointPage = () => {
+  const router = useRouter();
+
   const confettiRef = useRef<JSConfetti>(null);
   const [isOnceDayGift, setIsOnceDayGift] = useState<boolean>(false);
   const [currentPoint, setCurrentPoint] = useState<any>({
@@ -92,7 +95,14 @@ const MyPointPage = () => {
           alt="대청_달란트"
           className="w-36"
         />
-        <Button variant="outline">내 정보</Button>
+        <Button
+          variant="outline"
+          onClick={() => {
+            router.push('/my');
+          }}
+        >
+          내 정보
+        </Button>
       </div>
       <div className="flex flex-col gap-2 h-full">
         <Alert className="mb-4">
