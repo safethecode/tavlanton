@@ -14,6 +14,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectItem,
+  SelectContent,
+  Input,
+  Checkbox,
+  Label,
 } from '@/app/ui';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
@@ -44,10 +59,70 @@ const LeaderMainPage = () => {
     },
   });
 
+  const [open, setOpen] = useState(false);
+
+  const [districts, setDistricts] = useState<any[]>([]);
+
+  const [joinInfo, setJoinInfo] = useState<any>({
+    districtId: '',
+    backSeat: '',
+    name: '',
+    leader: false,
+  });
+
+  const handleJoinInfoChange = (e: any) => {
+    setJoinInfo({
+      ...joinInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const user: User = JSON.parse(getCookie('user')! || '{}');
 
   const handleStampRoute = () => {
     router.push('/stamp');
+  };
+
+  const handleAddUser = async () => {
+    const { districtId, backSeat, name, leader } = joinInfo;
+
+    if (!districtId) {
+      toast.error('소속 구역을 선택해주세요.');
+      return;
+    }
+
+    if (!backSeat) {
+      toast.error('전화번호 뒷자리를 입력해주세요.');
+      return;
+    }
+
+    if (!name) {
+      toast.error('이름을 입력해주세요.');
+      return;
+    }
+
+    const addUser = await axios
+      .post('/api/users/create', {
+        districtId: districtId,
+        backSeat: backSeat,
+        name,
+        leader,
+      })
+      .then((res) => {
+        setJoinInfo({
+          districtId: '',
+          backSeat: '',
+          name: '',
+          leader: false,
+        });
+        toast.success('구역원이 추가되었어요.');
+        setOpen(false);
+      })
+      .catch((err) => {
+        throw new Error(err.message);
+      });
+
+    return addUser;
   };
 
   useEffect(() => {
@@ -60,6 +135,23 @@ const LeaderMainPage = () => {
       .then((res) => {
         setDistrictInfo(res.data);
       });
+  }, []);
+
+  useEffect(() => {
+    const getDistricts = async () => {
+      const districts = await axios
+        .get<any[]>('/api/districts')
+        .then((res: any) => {
+          setDistricts(res.data.data);
+        })
+        .catch((err) => {
+          throw new Error(err.message);
+        });
+
+      return districts;
+    };
+
+    getDistricts();
   }, []);
   return (
     <div className="relative flex flex-col max-w-2xl mx-auto">
@@ -134,6 +226,95 @@ const LeaderMainPage = () => {
             </CardHeader>
           </Card>
         </div>
+        <Button
+          variant="outline"
+          className="mb-4"
+          onClick={() => setOpen(true)}
+        >
+          구역원 추가하기
+        </Button>
+        <Drawer open={open} onClose={() => setOpen(false)}>
+          <DrawerContent>
+            <div className="w-full max-w-[640px] bg-white p-4 mx-auto">
+              <DrawerHeader className="p-0 mb-4">
+                <DrawerTitle>구역원 추가하기</DrawerTitle>
+                <DrawerDescription>
+                  아래 항목을 모두 작성하여 구역원을 추가할 수 있어요.
+                </DrawerDescription>
+              </DrawerHeader>
+              <Select
+                name="districtId"
+                onValueChange={(value) => {
+                  setJoinInfo({
+                    ...joinInfo,
+                    districtId: value,
+                  });
+                }}
+              >
+                <SelectTrigger className="w-full h-12 bg-white mb-4">
+                  <SelectValue placeholder="소속 구역 선택이 필요해요." />
+                </SelectTrigger>
+                <SelectContent>
+                  {districts
+                    ?.filter((district) => district.district_name !== '교역자')
+                    .map((district, key) => (
+                      <SelectItem key={key} value={district.id}>
+                        {district.district_name + ' 구역'}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+              <Input
+                name="backSeat"
+                className="h-12 bg-white mb-4"
+                placeholder="전화번호 뒷자리를 입력해야 해요."
+                maxLength={4}
+                onChange={handleJoinInfoChange}
+              />
+              <Input
+                name="name"
+                className="h-12 bg-white mb-4"
+                placeholder="이름을 입력해야 해요."
+                onChange={handleJoinInfoChange}
+              />
+              <div className="flex items-center">
+                <div className="flex items-center space-x-2 mb-4">
+                  <Checkbox
+                    id="terms"
+                    onChange={
+                      ((e: any) => {
+                        setJoinInfo({
+                          ...joinInfo,
+                          leader: e.target.checked,
+                        });
+                      }) as any
+                    }
+                  />
+                  <Label htmlFor="terms">구역장 여부</Label>
+                </div>
+                <div className="flex items-center space-x-2 mb-4 ml-4">
+                  <Label htmlFor="terms" className="text-gray-400">
+                    전체 권한은 관리자에게 문의하세요.
+                  </Label>
+                </div>
+              </div>
+              <DrawerFooter className="p-0">
+                <Button className="h-12 w-full" onClick={handleAddUser}>
+                  추가하기
+                </Button>
+                <DrawerClose>
+                  <Button
+                    variant="outline"
+                    className="w-full h-12"
+                    onClick={() => setOpen(false)}
+                  >
+                    취소하기
+                  </Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </div>
+          </DrawerContent>
+        </Drawer>
         <div className="rounded-xl border border-solid border-gray-200 p-4">
           <Table>
             <TableCaption>
