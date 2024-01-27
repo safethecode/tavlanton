@@ -136,7 +136,7 @@ const MyPointPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Progress value={currentPoint.data / 50} />
+              <Progress value={currentPoint.data / 100} />
             </CardContent>
           </Card>
         </div>
