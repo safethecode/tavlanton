@@ -10,3 +10,5 @@ export * from './progress';
 export * from './select';
 export * from './sonner';
 export * from './drawer';
+export * from './checkbox';
+export * from './label';
