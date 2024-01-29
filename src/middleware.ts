@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-function authenticationMiddleware(request: NextRequest) {
+async function authenticationMiddleware(request: NextRequest) {
   const authenticated = request.cookies.get('authenticated');
 
   if (authenticated?.value === undefined) {
@@ -9,11 +9,37 @@ function authenticationMiddleware(request: NextRequest) {
     }
   }
   if (authenticated?.value === 'true') {
+    const user = request.cookies.get('user');
+
     if (request.url.includes('/auth')) {
       return NextResponse.redirect(new URL('/', request.url));
     }
+
+    if (user?.value && !request.url.includes('/api/my')) {
+      const userId = JSON.parse(user?.value).id;
+
+      const URL = new URLSearchParams({
+        user_id: userId,
+      }).toString();
+
+      const res = await fetch('http://localhost:3000/api/my' + '?' + URL, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await res.json();
+
+      const response = NextResponse.next();
+
+      response.cookies.set('user', JSON.stringify(data), {
+        maxAge: 60 * 60 * 24 * 365,
+      });
+
+      return response;
+    }
   }
-  return NextResponse.next();
 }
 
 export const config = {
