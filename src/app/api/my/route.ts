@@ -13,6 +13,6 @@ export async function GET(request: NextRequest) {
     .single();
 
   if (data) {
-    return Response.json(data);
+    return (Response as any).json(data);
   }
 }
