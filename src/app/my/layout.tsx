@@ -8,5 +8,5 @@ export const metadata = constructMetadata({
 });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <main className="w-full h-full bg-background p-6">{children}</main>;
+  return <main className="w-full h-full bg-background">{children}</main>;
 }

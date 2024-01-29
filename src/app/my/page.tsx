@@ -22,7 +22,7 @@ const UserMyPage = () => {
 
   const createdAt = new Date(user.created_at!);
   return (
-    <div className="relative flex flex-col max-w-2xl mx-auto">
+    <div className="relative flex flex-col max-w-2xl mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
         <img
           src="/_static/district/district-member-logo.svg"
