@@ -26,7 +26,7 @@ interface User {
 
 const district = {
   '34f4478d-bb51-41a9-80e1-d943aa4fd133': '김혜정',
-  'eee37d0a-8c7a-4fdd-9c64-459adcb461a0': '김민정',
+  'eee37d0a-8c7a-4fdd-9c64-459adcb461a0': '김민서',
   '3515eb48-6e0b-48db-9bea-ad9c37c16668': '맹승호',
   '7e80b530-bafa-40df-bcaa-dda12ae71abb': '천승희',
   'fe8eb020-9396-4195-9676-eae91628d78c': '차용준',
