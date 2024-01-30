@@ -65,8 +65,8 @@ const LeaderStampPage = () => {
         emojiSize: 200,
         confettiNumber: 30,
       });
-      toast.success('정상적으로 적립되었어요! 즐거운 예배!', {
-        position: 'top-center',
+      toast.success('정상적으로 적립되었어요! 즐거운 예배 되셔요 🙌', {
+        position: 'bottom-left',
       });
       setPhoneNumber('');
       setLoading(false);
