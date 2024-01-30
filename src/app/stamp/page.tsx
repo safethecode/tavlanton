@@ -6,10 +6,16 @@ import {
   Badge,
   Button,
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from '@/app/ui';
 
 import { useEffect, useRef, useState } from 'react';
@@ -36,6 +42,8 @@ const LeaderStampPage = () => {
 
   const [phoneNumber, setPhoneNumber] = useState<string>('');
 
+  const [isAlertDialogOpen, setIsAlertDialogOpen] = useState<boolean>(false);
+
   const handlePhoneNumber = (number: string) => {
     if (phoneNumber.length < 4) {
       setPhoneNumber((prev) => prev + number);
@@ -48,6 +56,7 @@ const LeaderStampPage = () => {
       toast.error('전화번호 뒷자리를 모두 입력해주세요.', {
         position: 'bottom-left',
       });
+      setLoading(false);
       return;
     }
     const getPhoneNumber = async () => {
@@ -127,9 +136,76 @@ const LeaderStampPage = () => {
             <CardHeader>
               <div className="flex items-center gap-2">
                 <CardTitle>{pointsType[0].point_type_name}</CardTitle>
-                <Badge variant="secondary" className="cursor-pointer">
-                  변경
-                </Badge>
+                <AlertDialog
+                  open={isAlertDialogOpen}
+                  onOpenChange={(isOpen) => setIsAlertDialogOpen(isOpen)}
+                >
+                  <AlertDialogTrigger asChild>
+                    <Badge variant="secondary" className="cursor-pointer">
+                      변경
+                    </Badge>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>적립 달란트 타입 변경</AlertDialogTitle>
+                    </AlertDialogHeader>
+                    {pointsType.map((pointType) => (
+                      <div
+                        key={pointType.id}
+                        className="flex flex-row items-center justify-between w-full p-2 hover:bg-gray-100 cursor-pointer rounded-md"
+                        style={{
+                          backgroundColor:
+                            pointType.id === pointsType[0].id ? '#eff6ff' : '',
+                        }}
+                        onClick={() => {
+                          setIsAlertDialogOpen(false);
+                          setPointsType((prevPointsType) => [
+                            {
+                              ...pointType,
+                              selected: true,
+                            },
+                            ...prevPointsType
+                              .filter((type) => type.id !== pointType.id)
+                              .map((type) => ({
+                                ...type,
+                                selected: false,
+                              })),
+                          ]);
+                        }}
+                      >
+                        <p
+                          className="text-lg text-gray-500"
+                          style={{
+                            color:
+                              pointType.id === pointsType[0].id
+                                ? '#3b82f6'
+                                : '',
+                            fontWeight:
+                              pointType.id === pointsType[0].id ? 700 : 400,
+                          }}
+                        >
+                          {pointType.point_type_name}
+                        </p>
+                        <p
+                          className="text-lg text-gray-500"
+                          style={{
+                            color:
+                              pointType.id === pointsType[0].id
+                                ? '#3b82f6'
+                                : '',
+                            fontWeight:
+                              pointType.id === pointsType[0].id ? 700 : 400,
+                          }}
+                        >
+                          {pointType.point}P
+                        </p>
+                      </div>
+                    ))}
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>취소</AlertDialogCancel>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
               <CardDescription>
                 적립되는 달란트는 {pointsType[0].point}P 입니다.
