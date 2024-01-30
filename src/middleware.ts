@@ -23,7 +23,7 @@ async function authenticationMiddleware(request: NextRequest) {
           user_id: userId,
         }).toString();
 
-        const res = await fetch('http://localhost:3000/api/my' + '?' + URL, {
+        const res = await fetch('https://대청비전.com/api/my' + '?' + URL, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
