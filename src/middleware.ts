@@ -16,28 +16,34 @@ async function authenticationMiddleware(request: NextRequest) {
     }
 
     if (user?.value && !request.url.includes('/api/my')) {
-      const userId = JSON.parse(user?.value).id;
+      try {
+        const userId = JSON.parse(user?.value).id;
 
-      const URL = new URLSearchParams({
-        user_id: userId,
-      }).toString();
+        const URL = new URLSearchParams({
+          user_id: userId,
+        }).toString();
 
-      const res = await fetch('http://localhost:3000/api/my' + '?' + URL, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+        const res = await fetch('http://localhost:3000/api/my' + '?' + URL, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      const response = NextResponse.next();
+        const response = NextResponse.next();
 
-      response.cookies.set('user', JSON.stringify(data), {
-        maxAge: 60 * 60 * 24 * 365,
-      });
+        response.cookies.set('user', JSON.stringify(data), {
+          maxAge: 60 * 60 * 24 * 365,
+        });
 
-      return response;
+        return response;
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        // Handle the error here, e.g. return an error response
+        return new Response('Error parsing JSON', { status: 500 });
+      }
     }
   }
 }
