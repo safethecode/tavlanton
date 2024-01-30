@@ -41,8 +41,11 @@ const LeaderStampPage = () => {
   ]);
 
   const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [duplicateUserInfo, setDuplicateUserInfo] = useState<any[]>([]);
 
   const [isAlertDialogOpen, setIsAlertDialogOpen] = useState<boolean>(false);
+  const [isDuplicateAlertDialogOpen, setIsDuplicateAlertDialogOpen] =
+    useState<boolean>(false);
 
   const handlePhoneNumber = (number: string) => {
     if (phoneNumber.length < 4) {
@@ -60,14 +63,6 @@ const LeaderStampPage = () => {
       return;
     }
     const getPhoneNumber = async () => {
-      confettiRef.current?.addConfetti({
-        emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
-        emojiSize: 200,
-        confettiNumber: 30,
-      });
-      toast.success('정상적으로 적립되었어요! 즐거운 예배 되셔요 🙌', {
-        position: 'bottom-left',
-      });
       setPhoneNumber('');
       setLoading(false);
       await axios.get(`/api/users/${phoneNumber}`).then((res) => {
@@ -78,6 +73,17 @@ const LeaderStampPage = () => {
               point: res.data.data[0].point + pointsType[0].point,
             })
             .then(() => {});
+          confettiRef.current?.addConfetti({
+            emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
+            emojiSize: 200,
+            confettiNumber: 30,
+          });
+          toast.success('정상적으로 적립되었어요! 즐거운 예배 되셔요 🙌', {
+            position: 'bottom-left',
+          });
+        } else if (res.data.data.length > 1) {
+          setDuplicateUserInfo(res.data.data);
+          setIsDuplicateAlertDialogOpen(true);
         }
       });
     };
@@ -121,6 +127,15 @@ const LeaderStampPage = () => {
   useEffect(() => {
     (confettiRef.current as JSConfetti) = new JSConfetti();
   }, []);
+
+  const district = {
+    '34f4478d-bb51-41a9-80e1-d943aa4fd133': '김혜정',
+    'eee37d0a-8c7a-4fdd-9c64-459adcb461a0': '김민서',
+    '3515eb48-6e0b-48db-9bea-ad9c37c16668': '맹승호',
+    '7e80b530-bafa-40df-bcaa-dda12ae71abb': '천승희',
+    'fe8eb020-9396-4195-9676-eae91628d78c': '차용준',
+    '930d8fcb-3e5e-46ce-af7b-980476cd19da': '차한나',
+  } as any;
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -319,6 +334,48 @@ const LeaderStampPage = () => {
             </div>
           </div>
         </section>
+        <AlertDialog
+          open={isDuplicateAlertDialogOpen}
+          onOpenChange={(isOpen) => setIsAlertDialogOpen(isOpen)}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>프로필을 선택해주세요!</AlertDialogTitle>
+            </AlertDialogHeader>
+            {duplicateUserInfo.map((user) => (
+              <div
+                key={user.id}
+                className="flex flex-row items-center justify-between w-full p-2 hover:bg-gray-100 cursor-pointer rounded-md"
+                onClick={() => {
+                  setIsDuplicateAlertDialogOpen(false);
+
+                  axios
+                    .put('/api/stamp', {
+                      id: user.id,
+                      point: user.point + pointsType[0].point,
+                    })
+                    .then(() => {});
+                  confettiRef.current?.addConfetti({
+                    emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
+                    emojiSize: 200,
+                    confettiNumber: 30,
+                  });
+                  toast.success(
+                    '정상적으로 적립되었어요! 즐거운 예배 되셔요 🙌',
+                    {
+                      position: 'bottom-left',
+                    },
+                  );
+                }}
+              >
+                <p className="text-lg text-gray-500">{user.name}</p>
+                <p className="text-lg text-gray-500">
+                  {district[user.districts_id] + ' 구역'}
+                </p>
+              </div>
+            ))}
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
