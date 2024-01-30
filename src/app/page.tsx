@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   AlertTitle,
@@ -20,6 +20,7 @@ import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { ColorRing } from 'react-loader-spinner';
 
 const MyPointPage = () => {
   const router = useRouter();
@@ -30,9 +31,11 @@ const MyPointPage = () => {
     data: 0,
     rank: 0,
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleOnceDayGiftClick = () => {
     const user = getCookie('user');
+    setLoading(true);
 
     axios
       .put('/api/point/', {
@@ -42,6 +45,7 @@ const MyPointPage = () => {
         getUserPoint(user);
 
         setIsOnceDayGift(true);
+        setLoading(false);
 
         confettiRef.current?.addConfetti({
           emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
@@ -161,12 +165,26 @@ const MyPointPage = () => {
             className="w-full h-14 flex items-center font-bold text-sm rounded-xl active:bg-primary/60 p-4 shadow-lg z-10"
             onClick={handleOnceDayGiftClick}
           >
-            하루 한 번, 랜덤 달란트 받기
-            <img
-              src="/_static/apng/heart-hands.png"
-              alt="선물"
-              className="w-4 ml-1"
-            />
+            {loading ? (
+              <ColorRing
+                visible={true}
+                height="40"
+                width="40"
+                ariaLabel="color-ring-loading"
+                wrapperStyle={{}}
+                wrapperClass="color-ring-wrapper"
+                colors={['#FFF', '#FFF', '#FFF', '#FFF', '#FFF']}
+              />
+            ) : (
+              <Fragment>
+                하루 한 번, 랜덤 달란트 받기
+                <img
+                  src="/_static/apng/heart-hands.png"
+                  alt="선물"
+                  className="w-4 ml-1"
+                />
+              </Fragment>
+            )}
           </Button>
           <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-t from-white/80 to-white -z-10"></div>
         </div>
