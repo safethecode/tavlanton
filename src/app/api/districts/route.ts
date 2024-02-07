@@ -1,6 +1,8 @@
-import { supabaseServer } from '@/utils';
+import { supabaseServer, supabaseTableName } from '@/utils';
 
 export async function GET() {
-  const districts = await supabaseServer.from('districts').select('*');
+  const districts = await supabaseServer
+    .from(supabaseTableName('districts'))
+    .select('*');
   return (Response as any).json(districts);
 }

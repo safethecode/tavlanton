@@ -1,4 +1,4 @@
-import { supabaseServer } from '@/utils/api';
+import { supabaseServer, supabaseTableName } from '@/utils/api';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -7,18 +7,18 @@ export async function GET(req: NextRequest) {
     : '';
 
   const districtInUsers = await supabaseServer
-    .from('users')
+    .from(supabaseTableName('users'))
     .select('*')
     .eq('districts_id', districtId);
 
   const districtInPoints = await supabaseServer
-    .from('users')
+    .from(supabaseTableName('users'))
     .select('*')
     .eq('districts_id', districtId)
     .select('point');
 
   const district = await supabaseServer
-    .from('districts')
+    .from(supabaseTableName('districts'))
     .select('*')
     .eq('id', districtId)
     .single();

@@ -1,11 +1,11 @@
-import { supabaseServer } from '@/utils';
+import { supabaseServer, supabaseTableName } from '@/utils';
 import { NextRequest } from 'next/server';
 
 export async function PUT(req: NextRequest) {
   const { id, point } = await req.json();
 
   const { data, error } = await supabaseServer
-    .from('users')
+    .from(supabaseTableName('users'))
     .select('*')
     .eq('id', id)
     .single();
@@ -19,7 +19,7 @@ export async function PUT(req: NextRequest) {
 
   if (data) {
     await supabaseServer
-      .from('users')
+      .from(supabaseTableName('users'))
       .update({ point: point })
       .eq('id', id)
       .select('*');

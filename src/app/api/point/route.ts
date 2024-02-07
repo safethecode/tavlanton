@@ -1,18 +1,18 @@
 import { NextRequest } from 'next/server';
-import { supabaseServer } from '@/utils';
+import { supabaseServer, supabaseTableName } from '@/utils';
 
 export async function GET(req: NextRequest) {
   const id = (await req.url.includes('?id=')) ? req.url.split('?id=')[1] : '';
 
   const { data } = await supabaseServer
-    .from('users')
+    .from(supabaseTableName('users'))
     .select('point')
     .eq('id', id)
     .single();
 
   // 상위 n%를 구하는 로직
   const { data: pointRank } = await supabaseServer
-    .from('users')
+    .from(supabaseTableName('users'))
     .select('point')
     .order('point', { ascending: false })
     .limit(100);
@@ -28,7 +28,7 @@ export async function PUT(req: NextRequest) {
   const { id } = await req.json();
 
   const { data, error } = await supabaseServer
-    .from('users')
+    .from(supabaseTableName('users'))
     .select('*')
     .eq('id', id)
     .single();
@@ -43,7 +43,7 @@ export async function PUT(req: NextRequest) {
   if (data) {
     const newPoint = data.point + Math.floor(Math.random() * 10) + 1;
     await supabaseServer
-      .from('users')
+      .from(supabaseTableName('users'))
       .update({ point: newPoint })
       .eq('id', id)
       .select('*');

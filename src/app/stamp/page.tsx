@@ -19,7 +19,7 @@ import {
 } from '@/app/ui';
 
 import { useEffect, useRef, useState } from 'react';
-import { supabase } from '@/utils';
+import { supabase, supabaseTableName } from '@/utils';
 import axios from 'axios';
 import { toast } from 'sonner';
 import JSConfetti from 'js-confetti';
@@ -98,7 +98,7 @@ const LeaderStampPage = () => {
   useEffect(() => {
     const getPointsType = async () => {
       const { data: pointsType, error } = await supabase
-        .from('points_type')
+        .from(supabaseTableName('points_type'))
         .select('*');
 
       if (error) {

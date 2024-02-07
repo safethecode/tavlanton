@@ -1,11 +1,11 @@
-import { supabaseServer } from '@/utils';
+import { supabaseServer, supabaseTableName } from '@/utils';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const phoneNumber = req.nextUrl.pathname.split('/')[3];
 
   const { data } = await supabaseServer
-    .from('users')
+    .from(supabaseTableName('users'))
     .select('*')
     .eq('back_seat', phoneNumber);
 

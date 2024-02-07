@@ -1,11 +1,11 @@
 import { NextRequest } from 'next/server';
-import { supabaseServer } from '@/utils';
+import { supabaseServer, supabaseTableName } from '@/utils';
 
 export async function POST(req: NextRequest) {
   const { name, backSeat } = await req.json();
 
   const { data, error } = await supabaseServer
-    .from('users')
+    .from(supabaseTableName('users'))
     .select('*')
     .eq('name', name)
     .single();
