@@ -40,13 +40,13 @@ next-env.d.ts
 .idea
 
 # pwa
-/public/precache.*.*.js
-/public/sw.js
-/public/workbox-*.js
-/public/worker-*.js
-/public/fallback-*.js
-/public/precache.*.*.js.map
-/public/sw.js.map
-/public/workbox-*.js.map
-/public/worker-*.js.map
-/public/fallback-*.js
+precache.*.*.js
+sw.js
+workbox-*.js
+worker-*.js
+fallback-*.js
+precache.*.*.js.map
+sw.js.map
+workbox-*.js.map
+worker-*.js.map
+fallback-*.js
