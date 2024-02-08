@@ -84,6 +84,10 @@ const LeaderStampPage = () => {
         } else if (res.data.data.length > 1) {
           setDuplicateUserInfo(res.data.data);
           setIsDuplicateAlertDialogOpen(true);
+        } else {
+          toast.error('해당 전화번호로 가입된 사용자가 없습니다.', {
+            position: 'bottom-left',
+          });
         }
       });
     };
