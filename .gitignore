@@ -50,3 +50,5 @@ sw.js.map
 workbox-*.js.map
 worker-*.js.map
 fallback-*.js
+# Sentry Config File
+.sentryclirc
