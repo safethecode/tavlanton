@@ -65,31 +65,34 @@ const LeaderStampPage = () => {
     const getPhoneNumber = async () => {
       setPhoneNumber('');
       setLoading(false);
-      await axios.get(`/api/users/${phoneNumber}`).then((res) => {
-        if (res.data.data.length === 1) {
-          axios
-            .put('/api/stamp', {
-              id: res.data.data[0].id,
-              point: res.data.data[0].point + pointsType[0].point,
-            })
-            .then(() => {});
-          confettiRef.current?.addConfetti({
-            emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
-            emojiSize: 200,
-            confettiNumber: 30,
-          });
-          toast.success('정상적으로 적립되었어요! 즐거운 예배 되셔요 🙌', {
-            position: 'bottom-left',
-          });
-        } else if (res.data.data.length > 1) {
-          setDuplicateUserInfo(res.data.data);
-          setIsDuplicateAlertDialogOpen(true);
-        } else {
+      await axios
+        .get(`/api/users/${phoneNumber}`)
+        .then((res) => {
+          if (res.data.data.length === 1) {
+            axios
+              .put('/api/stamp', {
+                id: res.data.data[0].id,
+                point: res.data.data[0].point + pointsType[0].point,
+              })
+              .then(() => {});
+            confettiRef.current?.addConfetti({
+              emojis: ['😘', '🥰', '🎁', '🪙', '🎉'],
+              emojiSize: 200,
+              confettiNumber: 30,
+            });
+            toast.success('정상적으로 적립되었어요! 즐거운 예배 되셔요 🙌', {
+              position: 'bottom-left',
+            });
+          } else if (res.data.data.length > 1) {
+            setDuplicateUserInfo(res.data.data);
+            setIsDuplicateAlertDialogOpen(true);
+          }
+        })
+        .catch(() => {
           toast.error('해당 전화번호로 가입된 사용자가 없습니다.', {
             position: 'bottom-left',
           });
-        }
-      });
+        });
     };
 
     getPhoneNumber();
