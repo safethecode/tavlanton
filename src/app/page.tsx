@@ -13,6 +13,7 @@ import {
   CardDescription,
   CardContent,
   Progress,
+  Badge,
 } from '@/app/ui';
 import { HeartFilledIcon } from '@radix-ui/react-icons';
 import JSConfetti from 'js-confetti';
@@ -32,6 +33,15 @@ const MyPointPage = () => {
     rank: 0,
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<any>({});
+
+  useEffect(() => {
+    const user = getCookie('user');
+
+    axios.get(`/api/users/${JSON.parse(user!).back_seat}`, {}).then((res) => {
+      setCurrentUser(res.data.data[0]);
+    });
+  }, []);
 
   const handleOnceDayGiftClick = () => {
     const user = getCookie('user');
@@ -144,17 +154,50 @@ const MyPointPage = () => {
             </CardContent>
           </Card>
         </div>
-        <h1 className="text-lg font-bold mb-2">달란트 사용 내역</h1>
+        <h1 className="text-lg font-bold mb-2">달란트 적립 내역</h1>
         <Card className="w-full mb-4">
           <CardContent className="flex flex-col justify-center items-center p-4">
-            <img
-              src="/_static/list-empty.svg"
-              alt="리스트에 아무 것도 없어요!"
-              className="w-32 mb-4"
-            />
+            {currentUser.point_history?.length === 0 && (
+              <img
+                src="/_static/list-empty.svg"
+                alt="리스트에 아무 것도 없어요!"
+                className="w-32 mb-4"
+              />
+            )}
             <h4 className="text-sm font-normal text-gray-400">
-              달란트를 사용하면 이 곳에 내역이 남아요!
+              달란트를 적립 받으면 여기에 기록되어요!
             </h4>
+            {currentUser.point_history?.length !== 0 && (
+              <div className="flex gap-2">
+                <Badge variant="secondary" className="mt-4">
+                  금요 철야{' '}
+                  {
+                    currentUser.point_history?.filter(
+                      (history: any) => history === '1',
+                    ).length
+                  }
+                  회
+                </Badge>
+                <Badge variant="secondary" className="mt-4">
+                  구역모임{' '}
+                  {
+                    currentUser.point_history?.filter(
+                      (history: any) => history === '2',
+                    ).length
+                  }
+                  회
+                </Badge>
+                <Badge variant="secondary" className="mt-4">
+                  5부 예배{' '}
+                  {
+                    currentUser.point_history?.filter(
+                      (history: any) => history === '3',
+                    ).length
+                  }
+                  회
+                </Badge>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
