@@ -135,6 +135,15 @@ globalStyle('*, *::before, *::after', {
   scrollbarWidth: 'none',
 });
 
+// input safari zoom disable
+globalStyle(
+  'input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], select:focus, textarea',
+  {
+    MozAppearance: 'textfield',
+    fontSize: '0.875rem',
+  },
+);
+
 /**
  * this is reset css for html and body elements
  * '--font-inter' is a custom variable applied in the globalFontsStyle file.
