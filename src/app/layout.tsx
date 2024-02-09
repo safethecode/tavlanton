@@ -1,3 +1,5 @@
+import Head from 'next/head';
+
 import { Toaster } from '@/app/ui';
 import { constructMetadata } from '@/utils/next';
 import { SpoqaFontStyle } from '@/styles/globalFontsStyle';
@@ -22,6 +24,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+        />
+      </Head>
       <body className={`${SpoqaFontStyle.className}`}>
         <Providers>{children}</Providers>
         <Toaster />
