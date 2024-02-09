@@ -73,6 +73,7 @@ const LeaderStampPage = () => {
               .put('/api/stamp', {
                 id: res.data.data[0].id,
                 point: res.data.data[0].point + pointsType[0].point,
+                pointTypeId: pointsType[0].id,
               })
               .then(() => {});
             confettiRef.current?.addConfetti({
@@ -360,6 +361,7 @@ const LeaderStampPage = () => {
                     .put('/api/stamp', {
                       id: user.id,
                       point: user.point + pointsType[0].point,
+                      pointTypeId: pointsType[0].id,
                     })
                     .then(() => {});
                   confettiRef.current?.addConfetti({
