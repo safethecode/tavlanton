@@ -2,7 +2,7 @@ import { supabaseServer, supabaseTableName } from '@/utils';
 import { NextRequest } from 'next/server';
 
 export async function PUT(req: NextRequest) {
-  const { id, point } = await req.json();
+  const { id, point, pointTypeId } = await req.json();
 
   const { data, error } = await supabaseServer
     .from(supabaseTableName('users'))
@@ -20,7 +20,10 @@ export async function PUT(req: NextRequest) {
   if (data) {
     await supabaseServer
       .from(supabaseTableName('users'))
-      .update({ point: point })
+      .update({
+        point: point,
+        point_history: data.point_history.concat(pointTypeId),
+      })
       .eq('id', id)
       .select('*');
 
