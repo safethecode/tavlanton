@@ -330,19 +330,21 @@ const LeaderMainPage = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {districtInfo.users.map((user, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell>
-                    {districtInfo.district.district_name} 구역
-                  </TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.back_seat}</TableCell>
-                  <TableCell className="text-right">
-                    {user.point?.toLocaleString('ko-KR')} P
-                  </TableCell>
-                </TableRow>
-              ))}
+              {districtInfo.users
+                .sort((a, b) => b.point! - a.point!)
+                .map((user, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">{index + 1}</TableCell>
+                    <TableCell>
+                      {districtInfo.district.district_name} 구역
+                    </TableCell>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.back_seat}</TableCell>
+                    <TableCell className="text-right">
+                      {user.point?.toLocaleString('ko-KR')} P
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </div>
