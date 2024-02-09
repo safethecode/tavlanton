@@ -1,4 +1,5 @@
 import { constructMetadata } from '@/utils/next';
+import Providers from '../providers';
 
 export const metadata = constructMetadata({
   title: '대청비전 :: 적립',
@@ -7,5 +8,9 @@ export const metadata = constructMetadata({
 });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <main className="w-full h-full bg-[#fff]">{children}</main>;
+  return (
+    <main className="w-full h-full bg-[#fff]">
+      <Providers>{children}</Providers>
+    </main>
+  );
 }
