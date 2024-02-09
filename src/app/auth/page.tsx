@@ -127,6 +127,7 @@ const AuthPage = () => {
           </SelectContent>
         </Select>
         <Input
+          type="number"
           name="backSeat"
           className="h-12 bg-white"
           placeholder="전화번호 뒷자리를 입력해야 해요."
