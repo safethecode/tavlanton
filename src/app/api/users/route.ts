@@ -5,5 +5,9 @@ export async function GET() {
     .from(supabaseTableName('users'))
     .select('*');
 
-  return (Response as any).json(data);
+  const response = new Response(JSON.stringify(data), {
+    headers: { 'Cache-Control': 'no-store' },
+  });
+
+  return response;
 }
