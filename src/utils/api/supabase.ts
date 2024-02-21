@@ -9,6 +9,9 @@ export const supabase = createBrowserClient(
     cookies: {},
     global: {
       fetch: createFetch({
+        next: {
+          revalidate: 0,
+        },
         cache: 'no-store',
       }),
     },

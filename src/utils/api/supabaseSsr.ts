@@ -8,6 +8,9 @@ export const supabaseServer = createServerClient(
     cookies: {},
     global: {
       fetch: createFetch({
+        next: {
+          revalidate: 0,
+        },
         cache: 'no-store',
       }),
     },
