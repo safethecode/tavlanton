@@ -73,17 +73,21 @@ const LeaderUserRealtimePage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {districtInfo.map((user, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium">{index + 1}</TableCell>
-                <TableCell>{district[user.districts_id]} 구역</TableCell>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.back_seat}</TableCell>
-                <TableCell className="text-right">
-                  {user.point?.toLocaleString('ko-KR')} P
-                </TableCell>
-              </TableRow>
-            ))}
+            {districtInfo
+              .sort((a, b) => {
+                return a.districts_id > b.districts_id ? 1 : -1;
+              })
+              .map((user, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{index + 1}</TableCell>
+                  <TableCell>{district[user.districts_id]} 구역</TableCell>
+                  <TableCell>{user.name}</TableCell>
+                  <TableCell>{user.back_seat}</TableCell>
+                  <TableCell className="text-right">
+                    {user.point?.toLocaleString('ko-KR')} P
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </div>
