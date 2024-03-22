@@ -15,6 +15,7 @@ import axios from 'axios';
 import { KartFontStyle } from '@/styles';
 import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
+import { ColorRing } from 'react-loader-spinner';
 
 const AuthPage = () => {
   const router = useRouter();
@@ -26,6 +27,8 @@ const AuthPage = () => {
     name: '',
   });
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleJoinInfoChange = (e: any) => {
     setJoinInfo({
       ...joinInfo,
@@ -34,6 +37,7 @@ const AuthPage = () => {
   };
 
   const handleJoinClick = async () => {
+    setLoading(true);
     if (joinInfo) {
       axios
         .post('/api/auth', joinInfo, {
@@ -50,6 +54,7 @@ const AuthPage = () => {
             toast('참여가 완료되었어요!', {
               description: '대청달란트에 참여해주셔서 감사합니다 👋',
             });
+            setLoading(false);
             router.push('/');
           } else {
             toast('참여에 실패했어요!', {
@@ -150,12 +155,26 @@ const AuthPage = () => {
         className="w-full h-14 flex items-center font-bold text-sm rounded-xl active:bg-primary/60 p-4 z-10"
         onClick={handleJoinClick}
       >
-        지금 바로 참여하기
-        <img
-          src="/_static/apng/waving-hand.png"
-          alt="선물"
-          className="w-5 ml-1 mb-1"
-        />
+        {loading ? (
+          <ColorRing
+            visible={true}
+            height="40"
+            width="40"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={['#FFF', '#FFF', '#FFF', '#FFF', '#FFF']}
+          />
+        ) : (
+          <>
+            지금 바로 참여하기
+            <img
+              src="/_static/apng/waving-hand.png"
+              alt="선물"
+              className="w-5 ml-1 mb-1"
+            />
+          </>
+        )}
       </Button>
     </main>
   );
