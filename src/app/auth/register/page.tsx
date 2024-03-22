@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
 import { ColorRing } from 'react-loader-spinner';
 
-const AuthPage = () => {
+const AuthRegisterPage = () => {
   const router = useRouter();
 
   const [districts, setDistricts] = useState<any[]>([]);
@@ -39,29 +39,29 @@ const AuthPage = () => {
   const handleJoinClick = async () => {
     setLoading(true);
     if (joinInfo) {
-      axios
-        .post('/api/auth', joinInfo, {
-          withCredentials: true,
-        })
+      await axios
+        .post(
+          '/api/users/create',
+          {
+            ...joinInfo,
+            leader: false,
+          },
+          {
+            withCredentials: true,
+          },
+        )
         .then((res) => {
-          if (res.data.status === 200) {
-            setCookie('authenticated', true, {
-              maxAge: 60 * 60 * 24 * 365,
-            });
-            setCookie('user', JSON.stringify(res.data.data), {
-              maxAge: 60 * 60 * 24 * 365,
-            });
-            toast('참여가 완료되었어요!', {
-              description: '대청달란트에 참여해주셔서 감사합니다 👋',
-            });
-            setLoading(false);
-            router.push('/');
-          } else {
-            toast('참여에 실패했어요!', {
-              description: '잠시 후 다시 시도해주세요 😥',
-            });
-            setLoading(false);
-          }
+          toast('가입이 완료되었어요!', {
+            description: '대청달란트에 가입해주셔서 감사합니다 👋',
+          });
+          setLoading(false);
+          router.push('/auth');
+        })
+        .catch((err) => {
+          toast('가입에 실패했어요!', {
+            description: '잠시 후 다시 시도해주세요 😥',
+          });
+          setLoading(false);
         });
     }
   };
@@ -91,22 +91,8 @@ const AuthPage = () => {
           className="w-36"
         />
       </div>
-      <div className="flex flex-col items-center gap-2 mt-6 mb-11">
-        <img
-          src="/_static/apng/airplane-arrival.png"
-          alt="비행기"
-          className="w-12 h-12"
-        />
-        <h1
-          className={`flex flex-col text-4xl font-bold mb-2 text-center ${KartFontStyle.className}`}
-        >
-          대학청년대교구
-          <br />
-          비상 프로젝트
-        </h1>
-      </div>
       <div className="flex flex-col gap-2 p-6 border border-solid border-gray-200 rounded-lg mb-4 bg-gray-50">
-        <h1 className="text-2xl font-bold">참여하기</h1>
+        <h1 className="text-2xl font-bold">가입하기</h1>
         <h4 className="text-sm text-gray-400 mb-2">
           아래 선택지를 모두 입력해야 해요!
         </h4>
@@ -147,18 +133,6 @@ const AuthPage = () => {
           onChange={handleJoinInfoChange}
         />
       </div>
-      <p className="text-sm text-gray-400 text-center mb-4">
-        참여할 수 있는 계정이 없다면{' '}
-        <span
-          className="text-primary font-bold cursor-pointer"
-          onClick={() => {
-            router.push('/auth/register');
-          }}
-        >
-          링크
-        </span>
-        를 클릭해주세요.
-      </p>
       <Button
         variant={
           joinInfo.districtId && joinInfo.backSeat && joinInfo.name
@@ -180,7 +154,7 @@ const AuthPage = () => {
           />
         ) : (
           <>
-            지금 바로 참여하기
+            지금 바로 가입하기
             <img
               src="/_static/apng/waving-hand.png"
               alt="선물"
@@ -193,4 +167,4 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+export default AuthRegisterPage;
