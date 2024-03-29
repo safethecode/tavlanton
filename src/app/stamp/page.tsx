@@ -239,10 +239,7 @@ const LeaderStampPage = () => {
             </CardHeader>
           </Card>
         </section>
-        <section
-          className="flex flex-col items-center w-1/2 bg-white h-[calc(100vh-85px)] border-l border-solid border-gray-200"
-          style={{ minHeight: '-webkit-fill-available' }}
-        >
+        <section className="flex flex-col items-center w-1/2 bg-white h-[calc(100vh-85px)] border-l border-solid border-gray-200">
           <div className="flex flex-col items-center justify-center w-full min-h-[200px] border-b border-solid border-gray-200">
             <p className="text-9xl font-bold text-gray-700 align-middle mb-4">
               {phoneNumber}
@@ -251,14 +248,8 @@ const LeaderStampPage = () => {
               본인이 사용하고 있는 전화번호 뒷자리를 입력해야 해요!
             </p>
           </div>
-          <div
-            className="flex flex-col items-center justify-center w-full h-[calc(100vh-285px)]"
-            style={{ minHeight: '-webkit-fill-available' }}
-          >
-            <div
-              className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]"
-              style={{ minHeight: '-webkit-fill-available' }}
-            >
+          <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-285px)]">
+            <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('1')}
@@ -278,10 +269,7 @@ const LeaderStampPage = () => {
                 <p className="text-5xl text-gray-500">3</p>
               </div>
             </div>
-            <div
-              className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]"
-              style={{ minHeight: '-webkit-fill-available' }}
-            >
+            <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('4')}
@@ -301,10 +289,7 @@ const LeaderStampPage = () => {
                 <p className="text-5xl text-gray-500">6</p>
               </div>
             </div>
-            <div
-              className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]"
-              style={{ minHeight: '-webkit-fill-available' }}
-            >
+            <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('7')}
@@ -324,10 +309,7 @@ const LeaderStampPage = () => {
                 <p className="text-5xl text-gray-500">9</p>
               </div>
             </div>
-            <div
-              className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]"
-              style={{ minHeight: '-webkit-fill-available' }}
-            >
+            <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => setPhoneNumber((prev) => prev.slice(0, -1))}
