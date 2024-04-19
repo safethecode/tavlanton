@@ -197,7 +197,7 @@ const LeaderMainPage = () => {
               variant="outline"
               onClick={() => {
                 if (user.permission) {
-                  router.push('/realtime');
+                  router.push('/all-member');
                 } else {
                   toast.error('권한이 없어요. 들어올 수 없단 뜻!');
                 }
