@@ -35,6 +35,7 @@ import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { isSafari } from '@/utils/browser';
 
 interface User {
   id?: string;
@@ -80,6 +81,10 @@ const LeaderMainPage = () => {
   const user: User = JSON.parse(getCookie('user')! || '{}');
 
   const handleStampRoute = () => {
+    if (isSafari) {
+      toast.error('Safari 브라우저에서는 적립 페이지를 이용할 수 없어요.');
+      return;
+    }
     router.push('/stamp');
   };
 
