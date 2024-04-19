@@ -31,7 +31,7 @@ const district = {
   '7e80b530-bafa-40df-bcaa-dda12ae71abb': '천승희',
   'fe8eb020-9396-4195-9676-eae91628d78c': '차용준',
   '930d8fcb-3e5e-46ce-af7b-980476cd19da': '차한나',
-} as any;
+} as { [key: string]: string };
 
 const LeaderUserRealtimePage = () => {
   const router = useRouter();
@@ -39,9 +39,15 @@ const LeaderUserRealtimePage = () => {
   const [districtInfo, setDistrictInfo] = useState<User[]>([]);
 
   useEffect(() => {
-    axios.get('/api/users').then((res) => {
-      setDistrictInfo(res.data);
-    });
+    axios
+      .get('/api/users', {
+        headers: {
+          'Cache-Control': 'no-store',
+        },
+      })
+      .then((res) => {
+        setDistrictInfo(res.data);
+      });
   }, []);
 
   return (
