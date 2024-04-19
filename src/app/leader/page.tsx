@@ -81,10 +81,10 @@ const LeaderMainPage = () => {
   const user: User = JSON.parse(getCookie('user')! || '{}');
 
   const handleStampRoute = () => {
-    if (isSafari) {
-      toast.error('Safari 브라우저에서는 적립 페이지를 이용할 수 없어요.');
-      return;
-    }
+    // if (isSafari) {
+    //   toast.error('Safari 브라우저에서는 적립 페이지를 이용할 수 없어요.');
+    //   return;
+    // }
     router.push('/stamp');
   };
 
