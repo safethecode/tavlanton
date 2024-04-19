@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   Button,
   Input,
@@ -20,6 +20,8 @@ import { ColorRing } from 'react-loader-spinner';
 const AuthPage = () => {
   const router = useRouter();
 
+  const userJoinButtonRef = useRef<HTMLButtonElement>(null);
+
   const [districts, setDistricts] = useState<any[]>([]);
   const [joinInfo, setJoinInfo] = useState<any>({
     districtId: '',
@@ -38,7 +40,7 @@ const AuthPage = () => {
 
   const handleJoinClick = async () => {
     setLoading(true);
-    if (joinInfo) {
+    if (joinInfo.districtId && joinInfo.backSeat && joinInfo.name) {
       axios
         .post('/api/auth', joinInfo, {
           withCredentials: true,
@@ -58,11 +60,16 @@ const AuthPage = () => {
             router.push('/');
           } else {
             toast('참여에 실패했어요!', {
-              description: '잠시 후 다시 시도해주세요 😥',
+              description: '계정이 틀렸거나, 잠시 후 다시 시도해주세요 😥',
             });
             setLoading(false);
           }
         });
+    } else {
+      toast('참여에 실패했어요!', {
+        description: '모든 정보를 입력해주세요 😥',
+      });
+      setLoading(false);
     }
   };
 
@@ -82,6 +89,20 @@ const AuthPage = () => {
 
     getDistricts();
   }, []);
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        userJoinButtonRef.current?.click();
+      }
+    };
+
+    document.addEventListener('keypress', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress);
+    };
+  }, [joinInfo]);
   return (
     <main className="relative h-full flex flex-col max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-6">
@@ -91,7 +112,7 @@ const AuthPage = () => {
           className="w-36"
         />
       </div>
-      <div className="flex flex-col items-center gap-2 mt-6 mb-11">
+      <div className="flex flex-col items-center gap-2 mt-4 mb-4">
         <img
           src="/_static/apng/airplane-arrival.png"
           alt="비행기"
@@ -160,6 +181,7 @@ const AuthPage = () => {
         를 클릭해주세요.
       </p>
       <Button
+        ref={userJoinButtonRef}
         variant={
           joinInfo.districtId && joinInfo.backSeat && joinInfo.name
             ? 'default'
