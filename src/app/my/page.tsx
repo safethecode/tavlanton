@@ -55,7 +55,13 @@ const UserMyPage = () => {
         </li>
         <li className="flex justify-between items-center">
           <span>생성일</span>
-          <span className="font-bold">{createdAt.toDateString()}</span>
+          <span className="font-bold">
+            {createdAt.toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </span>
         </li>
       </ul>
       {user.leader && (
