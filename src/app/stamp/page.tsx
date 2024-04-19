@@ -24,6 +24,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import JSConfetti from 'js-confetti';
 import { ColorRing } from 'react-loader-spinner';
+import { ArrowLeftIcon } from '@radix-ui/react-icons';
 
 const LeaderStampPage = () => {
   const router = useRouter();
@@ -148,17 +149,21 @@ const LeaderStampPage = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <header className="flex items-center justify-center p-6 bg-white border-b border-solid border-gray-200">
-        <p className="text-xl text-gray-500">전화번호 뒷자리를 눌러주세요.</p>
-        <Button variant="secondary" className="ml-4" onClick={handleBack}>
-          돌아가기
+        <p className="text-xl text-gray-500 max-sm:text-lg">
+          전화번호 뒷자리를 눌러주세요.
+        </p>
+        <Button
+          variant="secondary"
+          className="ml-4 max-sm:p-2"
+          onClick={handleBack}
+        >
+          <span className="max-sm:hidden">뒤로가기</span>
+          <ArrowLeftIcon className="w-6 h-6 text-gray-500 max-sm:block" />
         </Button>
       </header>
-      <div className="flex">
-        <section
-          className="flex flex-col w-1/2 h-[calc(100vh-181px)] p-8"
-          style={{ minHeight: '-webkit-fill-available' }}
-        >
-          <Card className="w-full mb-4">
+      <div className="flex max-sm:flex-col">
+        <section className="flex flex-col w-1/2 h-[calc(100vh-181px)] p-8 max-sm:w-full max-sm:h-fit max-sm:border-solid max-sm:border-b max-sm:border-gray-200">
+          <Card className="w-full">
             <CardHeader>
               <div className="flex items-center gap-2">
                 <CardTitle>{pointsType[0].point_type_name}</CardTitle>
@@ -239,7 +244,7 @@ const LeaderStampPage = () => {
             </CardHeader>
           </Card>
         </section>
-        <section className="flex flex-col items-center w-1/2 bg-white h-[calc(100vh-85px)] border-l border-solid border-gray-200">
+        <section className="flex flex-col items-center w-1/2 bg-white h-[calc(100vh-85px)] border-l border-solid border-gray-200 max-sm:w-full">
           <div className="flex flex-col items-center justify-center w-full min-h-[200px] border-b border-solid border-gray-200">
             <p className="text-9xl font-bold text-gray-700 align-middle mb-4">
               {phoneNumber}
@@ -254,19 +259,19 @@ const LeaderStampPage = () => {
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('1')}
               >
-                <p className="text-5xl text-gray-500">1</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">1</p>
               </div>
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('2')}
               >
-                <p className="text-5xl text-gray-500">2</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">2</p>
               </div>
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('3')}
               >
-                <p className="text-5xl text-gray-500">3</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">3</p>
               </div>
             </div>
             <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
@@ -274,19 +279,19 @@ const LeaderStampPage = () => {
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('4')}
               >
-                <p className="text-5xl text-gray-500">4</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">4</p>
               </div>
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('5')}
               >
-                <p className="text-5xl text-gray-500">5</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">5</p>
               </div>
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('6')}
               >
-                <p className="text-5xl text-gray-500">6</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">6</p>
               </div>
             </div>
             <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
@@ -294,19 +299,19 @@ const LeaderStampPage = () => {
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('7')}
               >
-                <p className="text-5xl text-gray-500">7</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">7</p>
               </div>
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('8')}
               >
-                <p className="text-5xl text-gray-500">8</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">8</p>
               </div>
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('9')}
               >
-                <p className="text-5xl text-gray-500">9</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">9</p>
               </div>
             </div>
             <div className="flex flex-row items-center justify-center w-full h-[calc(100vh-144px)]">
@@ -314,19 +319,19 @@ const LeaderStampPage = () => {
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => setPhoneNumber((prev) => prev.slice(0, -1))}
               >
-                <p className="text-5xl text-gray-300">지우기</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-300">지우기</p>
               </div>
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-r border-b border-solid border-gray-200 active:bg-gray-200"
                 onClick={() => handlePhoneNumber('0')}
               >
-                <p className="text-5xl text-gray-500">0</p>
+                <p className="text-5xl max-sm:text-4xl text-gray-500">0</p>
               </div>
               <div
                 className="flex flex-col items-center justify-center w-1/3 h-full border-b border-solid border-gray-200 active:bg-gray-200 bg-blue-500"
                 onClick={handleStamp}
               >
-                <p className="text-5xl text-white">
+                <p className="text-5xl max-sm:text-4xl text-white">
                   {loading ? (
                     <ColorRing
                       visible={true}
