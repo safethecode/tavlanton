@@ -275,12 +275,16 @@ const LeaderMainPage = () => {
                 placeholder="전화번호 뒷자리를 입력해야 해요."
                 maxLength={4}
                 onChange={handleJoinInfoChange}
+                autoComplete="off"
+                autoFocus={false}
               />
               <Input
                 name="name"
                 className="h-12 bg-white mb-4"
                 placeholder="이름을 입력해야 해요."
                 onChange={handleJoinInfoChange}
+                autoComplete="off"
+                autoFocus={false}
               />
               <div className="flex items-center">
                 <div className="flex items-center space-x-2 mb-4">
